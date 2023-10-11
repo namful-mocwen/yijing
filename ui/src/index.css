@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    font-family: monospace;
+    font-size: 15px;
+    color: white;
+    background-color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: monospace;
+  }
+  

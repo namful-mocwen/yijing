@@ -1,0 +1,55 @@
+html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+  }
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    width: 100vw;
+    font-size: 33px;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    background-color: black;
+    border-radius: 1%;
+    border: 1.8px solid white;
+    text-align: center;
+    color: white;
+    outline: none;
+    height: 33px;
+    width: 288px;
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+
+ button {
+    background: inherit;
+    color: inherit;
+    border: none;
+}
+
+.oracle {
+  border: 1px solid white;
+  padding: 12px;
+  text-align: center;
+}

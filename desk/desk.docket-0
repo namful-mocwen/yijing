@@ -1,0 +1,11 @@
+:~
+  title+'yijing'
+  info+'A simple yijing app.'
+  color+0x72.e072
+  version+[0 0 1]
+  website+'https://urbit.org'
+  glob-http+['https://bootstrap.urbit.org/glob-0v5.hurm4.ejod5.ngg9h.iub9i.n1j7o.glob' 0v5.hurm4.ejod5.ngg9h.iub9i.n1j7o]
+  license+'MIT'
+  base+'yijing'
+  
+==
