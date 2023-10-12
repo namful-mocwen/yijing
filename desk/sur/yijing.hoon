@@ -25,7 +25,7 @@
 :: +$ private map who casts
 :: look up by ship 
 
-::encryption
+:: encryption
 :: sharing where stored?
 :: maybe all shared to start
 
@@ -36,13 +36,12 @@
 +$  update
   $%  
     :: front-end 
-    :: [%share =who =when =entropy =intention =position =momentum]
     [%share =who =when =entropy =intention =position =momentum]
   ==
 
 +$  scry
   $% 
-    :: [%log =log]
+    [%log =log]
     [%shiplog =who =casts]
   ==
 --

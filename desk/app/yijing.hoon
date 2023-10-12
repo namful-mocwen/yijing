@@ -50,7 +50,7 @@
       %cast
       =/  hexagram  `@ud`(~(rad og eny.bowl) 64)
       ~&  >  hexagram
-      =/  change  `cast`[when=now.bowl entropy=eny.bowl intention.act position=hexagram momentum=hexagram]
+      =/  change  `cast`[now.bowl eny.bowl intention.act hexagram hexagram]
       :_  state(log (~(add ja log) our.bowl change))
       ~[(fact:io yijing-update+!>(`update`[%share who=our.bowl change]) ~[/updates])]
    ==
@@ -70,8 +70,12 @@
   ^-  (unit (unit cage))
   ?>  (team:title our.bowl src.bowl)
   ?+    pol  (on-peek:def pol)
-    :: [%x %log ~]   ``yijing-scry+!>([%log log)])
-    [%x %log ship=@ ~]   ``yijing-scry+!>([%shiplog who=ship:pol casts=(~(get by log) ship:pol)])
+    [%x %log ~]   ``yijing-scry+!>([%log log])
+    [%x %log ship=@ ~]
+        =/  shp=who  (slav %p ship:pol)
+        =/  hashp=(unit casts)   (~(get by log) shp)
+        ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
+       ``yijing-scry+!>([%shiplog shp u.hashp])
   ==
 
 :: ++  on-peek   on-peek:def

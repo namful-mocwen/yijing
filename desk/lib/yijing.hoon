@@ -14,8 +14,6 @@
     |=  upd=update
     ^-  json
     ~&  >  `@p`who.upd
-    :: why is this printing multiple times?
-    ::  position times?
     ?-  -.upd 
       %share
         %-  pairs
@@ -24,7 +22,7 @@
             ['entropy' (numb entropy.upd)]
             ['intention' s+intention.upd]
             ['position' (numb position.upd)]
-            ['momentum' (numb momentum.upd)]     :: +?
+            ['momentum' (numb momentum.upd)]   
         ==  
     ==
 
@@ -32,12 +30,12 @@
     =,  enjs:format
     |=  scr=scry
     ^-  json    
+    ::  combine logs?
     ?-  -.scr
         %shiplog
         :: list
         %-  frond
         :-  `@t`(scot %p who.scr)
-        :: ~&  >  +.scr
         :-  %a
         %+  turn  casts.scr
         |=  cst=cast
@@ -49,19 +47,23 @@
             ['position' (numb position.cst)]
             ['momentum' (numb momentum.cst)]
         == 
+        %log
+        :: map
+        :-  %a
+        %+  turn  ~(tap by log.scr)
+        |=  [p=who q=casts]
+        %-  frond
+        :-  `@t`(scot %p p)
+        :-  %a
+        %+  turn  q
+        |=  cst=cast
+        %-  pairs
+        :~  ['when' (time when.cst)]
+            ['entropy' (numb entropy.cst)]
+            ['intention' s+intention.cst]
+            ['position' (numb position.cst)]
+            ['momentum' (numb momentum.cst)]
+        == 
     ==
-:: --
-    ::   %log
-    ::     :: full mapmap
-    ::     ::    +.scry
-    ::     list
-    ::     %-  pairs
-    ::     :~  ['when' (time when.+.scry)]
-    ::         ['entropy' (numb entropy.+.scry)]
-    ::         ['intention' s+intention.+.scry]
-    ::         ['position' (numb position.+.upd)]
-    ::         ['momentum' (numb momentum.scry)]
-    ::         ==    
-    :: ==
 --
 

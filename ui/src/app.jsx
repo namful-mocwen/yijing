@@ -7,6 +7,7 @@ api.ship = window.ship;
 
 export function App() {
   const [log, setLog] = useState(new Map())
+  const [shipLog, setShipLog] = useState(new Map())
   const [oracle, setOracle] = useState({})
   const [intention, setIntention] = useState(null)
   const [subEvent, setSubEvent] = useState({})
@@ -16,7 +17,9 @@ export function App() {
   useEffect(() => {
     const init = async () =>  {
           subscribe()
-          console.log(await getLog())
+          setShipLog(await getShipLog())
+          setLog(await getLog())
+
     }
     window.urbit = new Urbit("")
     window.urbit.ship = window.ship
@@ -36,13 +39,21 @@ export function App() {
     updateFun()
   }, [subEvent]);
 
+  const getShipLog = async () => {
+    return window.urbit.scry({
+      app: 'yijing',
+      path: `/log/~${window.ship}`,
+    })
+  };
+
   const getLog = async () => {
     return window.urbit.scry({
       app: 'yijing',
-      path: `/log/${window.ship}`,
+      path: `/log`,
     })
   };
-  
+
+
   const subscribe = () => {
     try {
       window.urbit.subscribe({
@@ -77,7 +88,10 @@ const onKeyDown = e => {
   }
 };
 
-// console.log('log', log)
+console.log('log', log)
+console.log('ship', window.ship)
+console.log('shiplog', shipLog)
+
   return (
       <div>
         <header>
