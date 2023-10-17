@@ -1,55 +1,67 @@
 html {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-content: center;
-  }
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-content: center;
+  user-select: none; 
+}
 
 main {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
 header {
-    width: 100vw;
-    font-size: 33px;
-    display: flex;
-    justify-content: space-between;
+  width: 100vw;
+  font-size: 33px;
+  display: flex;
+  justify-content: space-between;
 }
 
 input {
-    background-color: black;
-    border-radius: 1%;
-    border: 1.8px solid white;
-    text-align: center;
-    color: white;
-    outline: none;
-    height: 33px;
-    width: 288px;
+  background-color: transparent;
+  border-radius: 33px;
+  border: 1.8px solid white;
+  text-align: center;
+  color: #CDCDCD;
+  font-size: 25px;
+  font-family: 'Helvetica';
+  outline: none;
+  height: 42px;
+  width: 383px;
 }
 
 ::-webkit-input-placeholder {
-    text-align: center;
-  }
-  
-  :-moz-placeholder {
-    text-align: center;
-  }
+  text-align: center;
+}
 
- button {
-    background: inherit;
-    color: inherit;
-    border: none;
+:-moz-placeholder {
+  text-align: center;
+}
+
+button {
+  background: inherit;
+  color: inherit;
+  border: none;
 }
 
 .oracle {
-  border: 1px solid white;
-  padding: 12px;
-  text-align: center;
+border: 1px solid white;
+padding: 12px;
+text-align: center;
+}
+.main {
+position: absolute;
+z-index: 0;
+}
+
+.renderer {
+position: absolute;
+z-index: -1;
 }
