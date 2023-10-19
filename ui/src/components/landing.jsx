@@ -33,7 +33,7 @@ export const Landing = () => {
 
     return(
         <main>
-              <Link className='nav' to="/apps/yijing/log">[log]</Link>
+            <Link className='nav' to="/apps/yijing/log">[log]</Link>
             {!oracle?.position 
             ? 
             <input
@@ -45,10 +45,10 @@ export const Landing = () => {
             />
             :
             <div className='oracle'>
-            <div>intention: {oracle.intention}</div><p/>
-            <div>position: {oracle.position}</div>
-            <div>momentum: {oracle.momentum}</div><p/>
-            <button onClick={() => setOracle({})}>X</button>
+                <div>intention: {oracle.intention}</div><p/>
+                <div>position: {oracle.position}</div>
+                <div>momentum: {oracle.momentum}</div><p/>
+                <button onClick={() => setOracle({})}>X</button>
             </div>}
          </main>
     )
