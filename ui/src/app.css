@@ -2,7 +2,7 @@ html {
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     display: flex;
     align-content: center;
   }
@@ -11,16 +11,18 @@ main {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
-    justify-content: center;
+    height: 95vh;
     align-items: center;
+      overflow: scroll;
 }
 
 header {
     width: 100vw;
     font-size: 33px;
+    position: fixed;
+    top: 0px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between;  
 }
 
 input {
@@ -53,3 +55,23 @@ input {
   padding: 12px;
   text-align: center;
 }
+
+table, tr, td, th  {
+  border: 1px solid white;
+  text-align: center;
+  padding: 3px;
+}
+
+.nav {
+  color: white;
+  position: fixed;
+  bottom: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+   background-color: white;
+   color: black;
+  }
+}
+
+
