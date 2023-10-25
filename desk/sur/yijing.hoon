@@ -5,7 +5,6 @@
 +$  who   @p
 +$  when  @da
 
-::  research strings types
 +$  intention  @t
 +$  position   @ud
 +$  momentum   @ud
@@ -31,12 +30,21 @@
 
 +$  action
   $%  [%cast =intention]
+      :: [%del =who]
   ==
 
 +$  update
   $%  
-    :: front-end 
-    [%share =who =when =entropy =intention =position =momentum]
+    ::share log
+    [%sngl =who =cast]
+    [%mult =who =casts]
+  ==
+
++$  send
+  $%  
+    ::share log
+    [%sngl =cast]
+    [%mult =casts]
   ==
 
 +$  scry

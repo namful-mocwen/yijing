@@ -1,14 +1,14 @@
 /-  *yijing
 /+  *yijing
-|_  act=action
+
+|_  snt=send
 ++  grow
   |%
-  ++  noun  act
+  ++  noun  snt
   --
 ++  grab
   |%
-  ++  noun  action
-  ++  json  dejs-action
+  ++  noun  send
   --
 ++  grad  %noun
 --

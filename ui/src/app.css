@@ -48,6 +48,7 @@ input {
     background: inherit;
     color: inherit;
     border: none;
+    cursor: pointer;
 }
 
 .oracle {
@@ -75,3 +76,7 @@ table, tr, td, th  {
 }
 
 
+.reverse{
+  color: black;
+  background-color: white;
+}

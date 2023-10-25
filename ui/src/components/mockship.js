@@ -1,4 +1,4 @@
-const mockLog = [
+const mockShipLog = [
     {
         "when": 1697668988853,
         "momentum": 32,
@@ -204,4 +204,4 @@ const mockLog = [
     }
 ]
 
-export default mockLog
+export default mockShipLog

@@ -1,10 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
-import mockLog from './mock.js'
+import mockLog from './mocklog.js'
+import mockShipLog from './mockship.js'
 import useUrbitStore from '../store'
+
+
+// real time add
 
 export const Log = () => {
     const { urbit, log, setLog, shipLog, setShipLog } = useUrbitStore()
+    const [display, setDisplay] = useState('~zod')
+
     const getShipLog = async () => {
         return urbit.scry({
         app: 'yijing',
@@ -23,19 +29,34 @@ export const Log = () => {
         const getLogs = async () =>  {
               setShipLog((await getShipLog())[`~${urbit.ship}`])
               setLog(await getLog())
+              setDisplay(`~${urbit.ship}`)
         }
-        urbit ? getLogs() : setShipLog(mockLog)
+
+        urbit ? getLogs() : setLog(mockLog)
       }, [urbit]);
     
-      console.log(shipLog)
-   return (
+     console.log('ship', urbit?.ship)
+    log && console.log('log', log)
+    return (
         <>
             <main>
                 <br/>
                 <table>
                     <thead>
                         <tr>
-                            <th colSpan={6}>{`~${urbit?.ship}`}</th>
+                            <th colSpan={6}>{
+                            Object.keys(log).map((l,i) => {
+                                // if (display !== l)
+                                return (
+                                    <span key={i}>
+                                        <button className={display === l ? 'reverse' : ''}
+                                                onClick={()=> setDisplay(l)}>{l} 
+                                        </button>&nbsp;&nbsp;
+                                    </span>
+
+                                )
+                            })}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,8 +66,8 @@ export const Log = () => {
                             <th>why</th>
                             <th>momentum</th>
                         </tr>
-                        {shipLog && shipLog.map((e,i) => {
-                            var when = new Date(e.when);
+                        {log[display]?.map((s,i) => {
+                            var when = new Date(s.when);
                             return (
                                 <tr key={i}>  
                                     <td>
@@ -54,14 +75,14 @@ export const Log = () => {
                                             {`${when.toLocaleDateString("en-US")}` }   
                                     </td> 
                                     <td>
-                                        {e.position}
+                                        {s.position}
                                     </td>    
                                 
                                     <td>
-                                        {e.intention}
+                                        {s.intention}
                                     </td> 
                                     <td>
-                                        {e.momentum}
+                                        {s.momentum}
                                     </td> 
                                 </tr>
                         )})}
