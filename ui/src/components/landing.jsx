@@ -3,6 +3,11 @@ import { Link } from "react-router-dom"
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 import * as THREE from 'three';
+import hexcolors from './hexcolors.json';
+
+const colorData = hexcolors.colors.find(color => color.num === hexagramNumber);
+const rgbValues = colorData.color.slice(1, -1).split(',').map(Number);
+const targetColor = { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2] };
 
 // This is the shader code - ignore this
 const defaultShader = `
