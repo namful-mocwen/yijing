@@ -23,6 +23,7 @@ export function App() {
         path: `/hexa`,
         }))
 
+        
       await newUrbit.subscribe({
         app: "yijing",
         path: "/updates",
