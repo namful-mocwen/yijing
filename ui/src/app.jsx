@@ -42,8 +42,6 @@ export function App() {
   return (
       <div>
         <header>
-          <span>䷁</span>
-          <span>䷀</span>
         </header>
         <main>
         <div style={{height:'0px'}}>:::       yijing       :::</div><p />
