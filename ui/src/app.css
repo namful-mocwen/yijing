@@ -7,6 +7,11 @@ html {
     align-content: center;
   }
 
+canvas {
+  position: absolute;
+  z-index: -1;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -26,18 +31,21 @@ header {
 }
 
 input {
-    background-color: black;
+    background-color: transparent;
     border-radius: 1%;
     border: 1.8px solid white;
-    text-align: center;
+    text-align: left;
     color: white;
     outline: none;
     height: 33px;
     width: 288px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
 ::-webkit-input-placeholder {
-    text-align: center;
+    text-align: left;
   }
   
   :-moz-placeholder {

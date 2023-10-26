@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
-import mockLog from './mocklog.js'
-import mockShipLog from './mockship.js'
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 
@@ -33,10 +31,10 @@ export const Log = () => {
               setFeed(`~${urbit.ship}`)
         }
 
-        urbit ? getLogs() : setLog(mockLog)
+        urbit && getLogs()
       }, [urbit]);
     
-     console.log('ship', urbit?.ship)
+    console.log('ship', urbit?.ship)
     log && console.log('log', log)
 
     return (

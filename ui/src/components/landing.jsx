@@ -1,10 +1,75 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from "react-router-dom"
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
+import * as THREE from 'three';
+
+// This is the shader code - ignore this
+const defaultShader = `
+  #ifdef GL_ES
+  precision mediump float;
+  #endif
+
+  uniform vec2 u_resolution;
+  uniform float u_time;
+  uniform vec3 u_fireColor;
+
+
+  float snoise(vec3 uv, float res)
+  {
+      const vec3 s = vec3(1e0, 1e2, 1e3);
+      
+      uv *= res;
+      
+      vec3 uv0 = floor(mod(uv, res)) * s;
+      vec3 uv1 = floor(mod(uv + vec3(1.), res)) * s;
+      
+      vec3 f = fract(uv);
+      f = f * f * (3.0 - 2.0 * f);
+
+      vec4 v = vec4(uv0.x + uv0.y + uv0.z, uv1.x + uv0.y + uv0.z,
+                    uv0.x + uv1.y + uv0.z, uv1.x + uv1.y + uv0.z);
+
+      vec4 r = fract(sin(v * 1e-1) * 1e3);
+      float r0 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
+      
+      r = fract(sin((v + uv1.z - uv0.z) * 1e-1) * 1e3);
+      float r1 = mix(mix(r.x, r.y, f.x), mix(r.z, r.w, f.x), f.y);
+      
+      return mix(r0, r1, f.z) * 2.0 - 1.0;
+  }
+
+  void main() {
+      vec2 p = -1.0 + 2.0 * gl_FragCoord.xy / u_resolution.xy;
+      p.x *= u_resolution.x / u_resolution.y;
+      
+      float fire = 0.0;
+      vec3 coord = vec3(atan(p.x, p.y) / 6.2832 + 0.5, length(p) * 0.9, 11);
+      float oscillatingValue = sin(u_time * 0.4);
+      float timeFactor = abs(oscillatingValue);
+      timeFactor = mix(-5.9, 1.0, timeFactor);
+      float shaderColor = 3.2 - (3.0 * length(2.0 * p)) + timeFactor;
+
+      for (int i = 1; i <= 7; i++) {
+          float power = pow(2.0, float(i));
+          shaderColor += (1.5 / power) * snoise(coord + vec3(0.0, -u_time * 0.1, u_time * 0.01), power * 3.0);
+      }
+                  
+      // Use u_fireColor instead of hardcoded fireColor
+      vec3 finalColor = mix(u_fireColor, u_fireColor * vec3(shaderColor), 0.3);
+      
+      gl_FragColor = vec4(finalColor, 1.0);
+  }
+`;
+
+
 
 export const Landing = () => {
     const { urbit, oracle, hexagrams, setIntention, setOracle, subEvent, setError } = useUrbitStore()
+    const materialRef = useRef(null); // Declare a reference for the material
+    
+    // This is the THREE.js canvasRef
+    const canvasRef = useRef(null);
 
     useEffect(() => {
       const updateFun = () => {
@@ -12,6 +77,99 @@ export const Landing = () => {
           }
       updateFun()
       }, [subEvent]);
+
+      useEffect(() => {
+        // Set up basic scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true });
+
+        const setRendererSize = () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+
+            renderer.setSize(newWidth, newHeight);
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+        };
+        setRendererSize();
+
+        renderer.domElement.classList.add('renderer');
+        document.body.appendChild(renderer.domElement);
+        window.addEventListener('resize', setRendererSize);
+
+        // Set up shader background
+        const plane = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);
+
+        // Set up uniforms for material
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_resolution: new THREE.Uniform(new THREE.Vector2()),
+                u_time: { value: 0.0 },
+                u_shaderColor: { value: 0.0 },
+                u_fireColor: { value: new THREE.Vector3(0.349, 0.416, 0.416) },
+                u_fadeFactor: { value: 0.0 }
+            },
+            fragmentShader: defaultShader
+        });
+
+        materialRef.current = material;
+
+        const bg = new THREE.Mesh(plane, material);
+        scene.add(bg);
+
+        // Add pointers
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        const cursorTarget = new THREE.Vector3();
+
+        // Add shadow
+        const orb = new THREE.SphereGeometry(0.087, 32, 32);
+        const orbMaterial = new THREE.MeshBasicMaterial({ color: 0xefefef });
+        const shadow = new THREE.Mesh(orb, orbMaterial);
+        scene.add(shadow);
+
+        function onMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children);
+
+            if (intersects.length > 0) {
+                const intersection = intersects[0];
+                cursorTarget.copy(intersection.point); // Store the target position
+                const dampingFactor = 0.1; // Adjust the damping factor as needed
+                shadow.position.lerp(cursorTarget, dampingFactor);
+            }
+        }
+
+        window.addEventListener('mousemove', onMouseMove, false);
+
+        camera.position.z = 5;
+
+        // Render and animate scene
+        const render = () => {
+            const object = scene.children[0];
+            object.material.uniforms.u_resolution.value.x = window.innerWidth;
+            object.material.uniforms.u_resolution.value.y = window.innerHeight;
+            renderer.render(scene, camera);
+        }
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            material.uniforms.u_time.value += 0.01;
+            render();
+        };
+
+        animate();
+        
+        return () => {
+            window.removeEventListener('resize', setRendererSize);
+            document.body.removeChild(renderer.domElement);
+        };
+    }, []);
+
 
 console.log('hexa', hexagrams)
     const cast = (intention) => {
@@ -32,9 +190,19 @@ console.log('hexa', hexagrams)
         setIntention('')
       }
     };
+    
 console.log('o',oracle)
     return(
+      
         <main>
+            <canvas ref={canvasRef} style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: -1
+            }}></canvas>
             <Link className='nav' to="/apps/yijing/log">[log]</Link>
             {!oracle?.position 
             ? 
