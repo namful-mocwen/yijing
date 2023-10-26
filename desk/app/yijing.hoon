@@ -1,17 +1,22 @@
 ::  yijing
 
 :: wip
+
+:: further todo:
+
 :: init entropy
 :: public/private
-:: nested core?
 :: cast pals comments
+:: charge pals casts like likes but not can be done daily
 :: hark
 :: cast from pals urbit eny
-:: gen
-:: shas?
-
-:: pals deleted cannot share same again
+:: generators
+:: nested core?
+:: shas for entropy?
+:: chat
 :: add update front for real time pals
+
+:: suggestions welcome
 
 /-  *yijing, *pals
 /+  *yijing, gossip, default-agent, dbug, agentio
@@ -156,6 +161,7 @@
         ==
       ==
       [%pals *]
+      :: pals deleted cannot share same again (gossip lib)
     ?+   -.sign  (on-agent:def wire sign)
           %fact
       ?+   p.cage.sign  (on-agent:def wire sign)
