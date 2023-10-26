@@ -101,21 +101,22 @@ export const Log = () => {
                     </tbody>
                 </table>
                 : <div className='oracle'>
-                    <button className='hover' onClick={() => setOracle({})}>[ X ]</button><br/><br/>
-                    <div>Intention: {oracle.intention}</div><p/>
-                    <div>Position: {oracle.position-1}</div><p/>
-                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/>
+                    <button className='hover' onClick={() => setOracle({})}>[ X ] </button><br/><br/>
+                    <div><p className='bold'>Intention</p> {oracle.intention}</div><p/><p>~</p>
+                    <div><p className='bold'>Position</p> {oracle.position}</div><p/>
+                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/><p/>
                     <div>{hexagrams[oracle.position-1].c} -  {hexagrams[oracle.position-1].nom}</div><p/>
-                    <div>Judgement: {hexagrams[oracle.position-1].jud}</div><p/>
-                    <div>Image: {hexagrams[oracle.position-1].img}</div><p/>
-                    {oracle.changing.length > 0 && <div><div>Changing Lines: 
-                    {oracle.changing?.map(o => {return <p>Line {o}: {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
-                    <p/>
-                    <div>Momentum: {oracle.momentum-1}</div><p/>
+                    <div><p className='bold'>Judgement</p> {hexagrams[oracle.position-1].jud}</div><p/>
+                    <div><p className='bold'>Image</p> {hexagrams[oracle.position-1].img}</div><p/>
+                    {oracle.changing.length > 0 && <div><div><span className='bold'>Changing Lines</span>
+                    {oracle.changing?.map(o => {return <p><span className='bold'>Line {o}:</span> {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
+                    <p/><p>~</p>
+                    <div><p className='bold'>Momentum</p> {oracle.momentum}</div><p/>
                     <div style={{fontSize:'64px'}}>{hexagrams[oracle.momentum-1].hc}</div><p/>
                     <div>{hexagrams[oracle.momentum-1].c} - {hexagrams[oracle.momentum-1].nom}</div><p/>
-                    <div>Judgement: {hexagrams[oracle.momentum-1].jud}</div><p/>
+                    <div><p className='bold'>Judgement</p> {hexagrams[oracle.momentum-1].jud}</div><p/>
                     </div>}
+                    <p>~</p>
                 </div>}
                 <br/><br/>
             </main>

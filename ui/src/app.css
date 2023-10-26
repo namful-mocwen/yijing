@@ -70,6 +70,7 @@ table, tr, td, th  {
     background-color: white;
   }
 }
+
 table{
   padding: 0;
 }
@@ -89,4 +90,8 @@ table{
 .reverse{
   color: black;
   background-color: white;
+}
+
+.bold {
+  font-weight: bold;
 }
