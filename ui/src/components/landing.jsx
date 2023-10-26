@@ -5,9 +5,6 @@ import '@urbit/sigil-js'
 import * as THREE from 'three';
 import hexcolors from './hexcolors.json';
 
-const colorData = hexcolors.colors.find(color => color.num === hexagramNumber);
-const rgbValues = colorData.color.slice(1, -1).split(',').map(Number);
-const targetColor = { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2] };
 
 // This is the shader code - ignore this
 const defaultShader = `
@@ -71,10 +68,92 @@ const defaultShader = `
 
 export const Landing = () => {
     const { urbit, oracle, hexagrams, setIntention, setOracle, subEvent, setError } = useUrbitStore()
-    const materialRef = useRef(null); // Declare a reference for the material
+    const [inputPos, setInputPos] = useState({ x: 0, y: 0 });
+    const [isActive, setIsActive] = useState(false);
+    const inputRef = useRef(null);
     
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            setInputPos({
+                x: e.clientX,
+                y: e.clientY
+            });
+        };
+    
+        const handleKeyDown = (e) => {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                setIsActive(true);
+                inputRef.current.focus();
+            }
+        };
+    
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('keydown', handleKeyDown);
+    
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+    
+    const handleBlur = () => {
+        setIsActive(false);
+    };
+        // This is the THREE.js material ref to change the shader color depending on cast results
+    const materialRef = useRef(null);    
     // This is the THREE.js canvasRef
     const canvasRef = useRef(null);
+
+    const fadeToBlack = () => {
+        if (materialRef.current) {
+            materialRef.current.fragmentShader = defaultShader;
+            materialRef.current.needsUpdate = true;
+            
+            // Clear any existing timeouts and animation frames
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = null;
+            }
+    
+            // Initial flame color
+            let fireColor = { ...currentFireColor };
+            
+            // Call target flame color from hexcolors.json
+            const hexagramIndex = oracle.position ? oracle.position - 1 : null;
+            const colorData = hexagramIndex !== null ? hexcolors.colors.find(color => color.num === hexagramIndex) : null;
+            const rgbValues = colorData ? colorData.color.slice(1, -1).split(',').map(Number) : null;
+            const targetColor = rgbValues ? { r: rgbValues[0], g: rgbValues[1], b: rgbValues[2] } : null;
+                
+            const decrement = 0.005;
+            const frameDelay = 30;
+    
+            const animate = () => {
+                animationFrameRef.current = requestAnimationFrame(animate);
+    
+                fireColor.r = THREE.MathUtils.lerp(fireColor.r, targetColor.r, decrement);
+                fireColor.g = THREE.MathUtils.lerp(fireColor.g, targetColor.g, decrement);
+                fireColor.b = THREE.MathUtils.lerp(fireColor.b, targetColor.b, decrement);
+    
+                // Update the shader uniform with the new fireColor
+                materialRef.current.uniforms.u_fireColor.value = new THREE.Vector3(fireColor.r, fireColor.g, fireColor.b);
+                materialRef.current.needsUpdate = true;
+    
+                if (Math.abs(fireColor.r - targetColor.r) > 0.01 || 
+                    Math.abs(fireColor.g - targetColor.g) > 0.01 || 
+                    Math.abs(fireColor.b - targetColor.b) > 0.01) {
+                    timeoutRef.current = setTimeout(() => {
+                        requestAnimationFrame(animate);
+                    }, frameDelay);
+                }
+            };
+    
+            animate();
+        }
+    };
 
     useEffect(() => {
       const updateFun = () => {
@@ -212,13 +291,21 @@ console.log('o',oracle)
             {!oracle?.position 
             ? 
             <input
+                ref={inputRef}
+                style={{
+                    position: 'absolute',
+                    top: `${inputPos.y}px`,
+                    left: `${inputPos.x}px`,
+                    pointerEvents: isActive ? 'auto' : 'none'
+                }}
                 type='text' 
                 name='intention' 
-                placeholder='*?*' 
+                placeholder='Type your intentions here . . .' 
                 onChange={e => setIntention(e.target.value)}
                 onKeyDown={e => onKeyDown(e)}
+                onBlur={handleBlur}
             />
-            :
+                :
             <div className='oracle'>
                 <div>intention: {oracle.intention}</div><p/>
                 <div>position: {oracle.position-1}</div><p/>

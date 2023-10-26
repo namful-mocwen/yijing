@@ -33,12 +33,13 @@ header {
 input {
     background-color: transparent;
     border-radius: 1%;
-    border: 1.8px solid white;
+    border: transparent;
     text-align: left;
     color: white;
     outline: none;
+    font-size: 33px;
     height: 33px;
-    width: 288px;
+    width: auto;
 }
 
 ::-webkit-scrollbar {
