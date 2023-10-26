@@ -36,7 +36,7 @@ export const Log = () => {
     
     console.log('ship', urbit?.ship)
     log && console.log('log', log)
-
+      // urbit sigil moons missing
     return (
         <>
             <main>
@@ -55,7 +55,7 @@ export const Log = () => {
                                 return (
                                     <span key={i}>
                                         <button className={feed === l ? 'reverse' : ''}
-                                            onClick={()=> setFeed(l)}>{l} 
+                                            onClick={()=> setFeed(l)}>{(l.length > 16) ? `~${l.slice(l.length-13, l.length)}` : l } 
                                         </button>&nbsp;&nbsp;
                                     </span>
                                 )
@@ -73,14 +73,16 @@ export const Log = () => {
                         </tr>
                         {log[feed]?.map((s,i) => {
                             var when = new Date(s.when);
+                            console.log('feed')
                             return (
                                 <tr className='hover' onClick={()=> setOracle(s)} tkey={i}>  
                                     <td>
-                                    <urbit-sigil {...{ point: feed, 
+                                    {<urbit-sigil {...{ point: (feed.length) > 16 
+                                                        ? feed.slice(feed.length-13, feed.length) : feed, 
                                                        size: 28,
                                                        space:'none',
                                                     }}
-                                     />
+                                     />}  
                                     </td>
                                     <td>
                                             {`${when.toLocaleTimeString("en-US")}`}   <br></br>

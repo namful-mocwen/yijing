@@ -71,7 +71,9 @@ export const Landing = () => {
                   <p>~</p>
             </div>}
             <div style={{marginTop:'128px', marginRight: '16px'}}>
-            {!oracle?.position && <urbit-sigil {...{ point: urbit?.ship, size: 256, space: 'none'}} />}
+            {!oracle?.position && <urbit-sigil {...{ point: (urbit?.ship.length > 16) 
+                ? urbit?.ship.slice(urbit?.ship.length-13, urbit?.ship.length) 
+                : urbit?.ship , size: 208, space: 'none'}} />}
             </div>
             <Link  className='nav' to="/apps/yijing/log">[log]</Link>
          </main>
