@@ -73,7 +73,6 @@ export const Log = () => {
                         </tr>
                         {log[feed]?.map((s,i) => {
                             var when = new Date(s.when);
-                            console.log('feed')
                             return (
                                 <tr className='hover' onClick={()=> setOracle(s)} tkey={i}>  
                                     <td>

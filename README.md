@@ -5,6 +5,8 @@ share with pals using gossip library (pals app required)
 view personal and pals log of casts    
   
 ### Setup  
+    
+|install ~tapmeg-pitbus-namful-mocwen %yijing
   
 ## Desk    
   
