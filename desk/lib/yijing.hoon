@@ -1,16 +1,6 @@
 /-  *yijing
+
 |%
-+$  element  ?(%heaven %lake %fire %thunder %wind %water %mountain %earth)
-+$  name  ?(%qian %dui %li %zhen %xun %kan %gen %kun)
-+$  trigram  [element name]
-+$  trikey  [(list @ud) trigram]
-+$  trilist  (list trikey)
-+$  hexlist  (list [(list @ud) @ud])
-
-+$  hexagram  [num=@ud hc=tape nom=tape c=tape jud=tape img=tape l1=tape l2=tape l3=tape l4=tape l5=tape l6=tape]
-+$  hexkey  [(list @ud) hexagram]
-+$  hexkeylist  (list hexkey)
-
 ++  linelist
     |=  [eny=entropy count=@ud]
     ^-  (list @ud)
@@ -43,9 +33,7 @@
          hexagram  (flop (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram))
         
     ==
-    
-        
-        
+       
 ++  beinghex
     |=  cast=(list @ud)
     =/  n  6
@@ -81,13 +69,16 @@
     ::  %.n --> 1
     (snap cast (dec n) 1)
     ==
-++  changinglines
+
+++  changing-lines
     |=  cast=(list @ud)
+    %+  turn
     %+  sort  
     %+  weld 
         (fand `(list @ud)`~[6] cast) 
         (fand `(list @ud)`~[9] cast)
     gth
+    |=(a=@ud (add a 1))
 
 ++  trigrams
     |=  key=(list @ud)
@@ -127,6 +118,7 @@
             ['entropy' (numb entropy.cast.upd)]
             ['intention' s+intention.cast.upd]
             ['position' (numb position.cast.upd)]
+            ['changing' a+(turn changing.cast.upd |=(chg=@ud (numb chg)))]
             ['momentum' (numb momentum.cast.upd)]   
         ==  
       %mult  ~
@@ -139,7 +131,7 @@
     ::  combine logs?
     ?-  -.scr
         %shiplog
-        :: list
+        :: lis
         %-  frond
         :-  `@t`(scot %p who.scr)
         :-  %a
@@ -151,11 +143,11 @@
             ['entropy' (numb entropy.cst)]
             ['intention' s+intention.cst]
             ['position' (numb position.cst)]
+            ['changing' a+(turn changing.cst |=(chg=@ud (numb chg)))]
             ['momentum' (numb momentum.cst)]
         == 
         %log
         :: map
-    
         %-  pairs
         %+  turn  ~(tap by log.scr)
         |=  [p=who q=casts]
@@ -168,7 +160,28 @@
             ['entropy' (numb entropy.cst)]
             ['intention' s+intention.cst]
             ['position' (numb position.cst)]
+            ['changing' a+(turn changing.cst |=(chg=@ud (numb chg)))]
             ['momentum' (numb momentum.cst)]
+        == 
+        %hexa
+        ::map
+        :-  %a
+        %+  turn  ~(tap by hxgrms.scr)
+        ::  numbers dont work as keys
+        |=  [key=(list @ud) hxa=hexagram]
+        %-  pairs
+        :~  ['num' (numb num.hxa)]
+            ['hc' (tape hc.hxa)]
+            ['nom' (tape nom.hxa)]
+            ['c' (tape c.hxa)]
+            ['jud' (tape jud.hxa)]
+            ['img' (tape img.hxa)]
+            ['l1' (tape l1.hxa)]
+            ['l2' (tape l2.hxa)]
+            ['l3' (tape l3.hxa)]
+            ['l4' (tape l4.hxa)]
+            ['l5' (tape l5.hxa)]
+            ['l6' (tape l6.hxa)]
         == 
     ==
 
@@ -246,7 +259,7 @@
     
 ++  hexagrams
     |=  key=(list @ud)
-    ^-  hexagram
+    ^-  hxgrms
     =/  =hexkeylist
     :~
         :-  ~[1 1 1 1 1 1]  
@@ -744,7 +757,7 @@
                 l5="Friendly retreat. Perseverance brings good fortune."
                 l6="Cheerful retreat. Everything serves to further."
             ==
-        :-  ~ [1 1 1 1 0 0]
+        :-  ~[1 1 1 1 0 0]
             :*
                 num=34
                 hc="䷡"
@@ -752,12 +765,12 @@
                 c="大壯"
                 jud="The power of the great. Perseverance furthers."
                 img="Thunder in heaven above: Thus the superior man doesn't tread on paths that don't accord with established order."
-                l1="r"
-                l2="e"
-                l3="c"
-                l4="e"
-                l5="i"
-                l6="v"
+                l1="Power in the toes. Continuing brings misfortune. This is certainly true."
+                l2="Perseverance brings good fortune."
+                l3="The inferior man works through power. The superior man doesn't act thus. To continue is dangerous. A goat butts against a hedge and gets its horns entangled."
+                l4="Perseverance brings good fortune. Remorse disappears. The hedge opens; there's no entanglement. Power depends on the axle of a big cart."
+                l5="Loses the goat with ease. No remorse."
+                l6="A goat butts against a hedge. It can't go backward, it can't go forward. Nothing serves to further."
             ==
         :-  ~[0 0 0 1 0 1]
             :*
@@ -1210,7 +1223,5 @@
                 l6="There's drinking of wine In genuine confidence. No blame. But if one wets his head, he loses it, in truth."
             ==
     ==
-    (~(got by (malt hexkeylist)) key)    
- 
+    (malt hexkeylist)
 --
-

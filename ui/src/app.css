@@ -60,7 +60,10 @@ input {
 table, tr, td, th  {
   border: 1px solid white;
   text-align: center;
-  padding: 3px;
+  padding: 8px;
+}
+table{
+  padding: 0;
 }
 
 .nav {
@@ -74,7 +77,6 @@ table, tr, td, th  {
    color: black;
   }
 }
-
 
 .reverse{
   color: black;

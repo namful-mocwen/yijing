@@ -11,13 +11,18 @@ import './app.css'
 
 
 export function App() {
-  const { urbit, setUrbit, setSubEvent } = useUrbitStore()
+  const { urbit, setUrbit, setHexagrams, setSubEvent } = useUrbitStore()
 
   useEffect(() => {
     const init = async () =>  {
       const newUrbit = new Urbit('', '')
       newUrbit.ship = window.ship
-  
+
+      setHexagrams(await newUrbit.scry({
+        app: 'yijing',
+        path: `/hexa`,
+        }))
+
       await newUrbit.subscribe({
         app: "yijing",
         path: "/updates",
@@ -25,10 +30,12 @@ export function App() {
         err: () => console.log("Subscription rejected"),
         quit: () => console.log("Kicked from subscription"),
       })
+
       setUrbit(newUrbit)
     }
     init()
   }, []);
+
 
  console.log('ship', urbit?.ship)
 

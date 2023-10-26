@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 const useUrbitStore = create((set) => ({
     urbit: null,
+    hexagrams: new Map(),
     log: new Map(),
     shipLog: [],
     subEvent: null,
@@ -10,6 +11,7 @@ const useUrbitStore = create((set) => ({
     loading: false,
     error: null,
     setUrbit: (urbit) => set({ urbit }),
+    setHexagrams: (hexagrams) => set({ hexagrams }),
     setLog: log => set({ log }),
     setShipLog: shipLog => set({ shipLog }),
     setSubEvent: subEvent => set({ subEvent }),

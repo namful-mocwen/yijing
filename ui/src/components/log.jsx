@@ -3,13 +3,14 @@ import { Link } from "react-router-dom"
 import mockLog from './mocklog.js'
 import mockShipLog from './mockship.js'
 import useUrbitStore from '../store'
+import '@urbit/sigil-js'
 
 
 // real time add
 
 export const Log = () => {
-    const { urbit, log, setLog, shipLog, setShipLog } = useUrbitStore()
-    const [display, setDisplay] = useState('~zod')
+    const { urbit, log, hexagrams, setLog, shipLog, setShipLog } = useUrbitStore()
+    const [feed, setFeed] = useState('~zod')
 
     const getShipLog = async () => {
         return urbit.scry({
@@ -29,7 +30,7 @@ export const Log = () => {
         const getLogs = async () =>  {
               setShipLog((await getShipLog())[`~${urbit.ship}`])
               setLog(await getLog())
-              setDisplay(`~${urbit.ship}`)
+              setFeed(`~${urbit.ship}`)
         }
 
         urbit ? getLogs() : setLog(mockLog)
@@ -37,6 +38,7 @@ export const Log = () => {
     
      console.log('ship', urbit?.ship)
     log && console.log('log', log)
+
     return (
         <>
             <main>
@@ -44,13 +46,18 @@ export const Log = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th colSpan={6}>{
-                            Object.keys(log).map((l,i) => {
-                                // if (display !== l)
+                            <th colSpan={6}>
+                                {/* <span>
+                                    <button className={feed === `~${urbit?.ship}` ? 'reverse' : ''}
+                                        onClick={()=> setFeed(`~${urbit?.ship}`)}>{`~${urbit?.ship}`} 
+                                    </button>
+                                </span> */}
+                                { Object.keys(log).map((l,i) => {
+                                // if (feed !== l)
                                 return (
                                     <span key={i}>
-                                        <button className={display === l ? 'reverse' : ''}
-                                                onClick={()=> setDisplay(l)}>{l} 
+                                        <button className={feed === l ? 'reverse' : ''}
+                                            onClick={()=> setFeed(l)}>{l} 
                                         </button>&nbsp;&nbsp;
                                     </span>
 
@@ -61,28 +68,36 @@ export const Log = () => {
                     </thead>
                     <tbody>
                         <tr>
+                            <th>who</th>
                             <th>when</th>
                             <th>position</th>
-                            <th>why</th>
+                            <th>intention</th>
                             <th>momentum</th>
                         </tr>
-                        {log[display]?.map((s,i) => {
+                        {log[feed]?.map((s,i) => {
                             var when = new Date(s.when);
                             return (
                                 <tr key={i}>  
                                     <td>
-                                            {` ${when.toLocaleTimeString("en-US")}`}   <br></br>
-                                            {`${when.toLocaleDateString("en-US")}` }   
+                                    <urbit-sigil {...{ point: feed, 
+                                                       size: 28,
+                                                       space:'none',
+                                                    }}
+                                     />
+                                    </td>
+                                    <td>
+                                            {`${when.toLocaleTimeString("en-US")}`}   <br></br>
+                                            {`${when.toLocaleDateString("en-US")}`}   
                                     </td> 
                                     <td>
-                                        {s.position}
+                                        {hexagrams[s.position-1]?.hc ||  s.position}
                                     </td>    
                                 
                                     <td>
                                         {s.intention}
                                     </td> 
                                     <td>
-                                        {s.momentum}
+                                        {hexagrams[s.momentum]?.hc || s.momentum}
                                     </td> 
                                 </tr>
                         )})}

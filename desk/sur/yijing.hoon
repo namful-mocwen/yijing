@@ -7,14 +7,13 @@
 
 +$  intention  @t
 +$  position   @ud
++$  changing   (list @ud)
 +$  momentum   @ud
 +$  entropy    @uvj
 
 ::  research message structure samples
 
-+$  cast  [=when =entropy =intention =position =momentum]
-+$  casts  (list cast)
-+$  log  (jar who cast)
+
 ::+$  log  (list cast)
 
 :: search with this 
@@ -28,6 +27,23 @@
 :: sharing where stored?
 :: maybe all shared to start
 
++$  cast  [=when =entropy =intention =position =changing =momentum]
++$  casts  (list cast)
++$  log  (jar who cast)
+
+
++$  element  ?(%heaven %lake %fire %thunder %wind %water %mountain %earth)
++$  name  ?(%qian %dui %li %zhen %xun %kan %gen %kun)
++$  trigram  [element name]
++$  trikey  [(list @ud) trigram]
++$  trilist  (list trikey)
++$  hexlist  (list [(list @ud) @ud])
+
++$  hexagram  [num=@ud hc=tape nom=tape c=tape jud=tape img=tape l1=tape l2=tape l3=tape l4=tape l5=tape l6=tape]
++$  hxgrms  (map (list @ud) hexagram)
+
++$  hexkey  [(list @ud) hexagram]
++$  hexkeylist  (list hexkey)  
 +$  action
   $%  [%cast =intention]
       :: [%del =who]
@@ -35,14 +51,12 @@
 
 +$  update
   $%  
-    ::share log
     [%sngl =who =cast]
     [%mult =who =casts]
   ==
 
 +$  send
   $%  
-    ::share log
     [%sngl =cast]
     [%mult =casts]
   ==
@@ -51,5 +65,6 @@
   $% 
     [%log =log]
     [%shiplog =who =casts]
+    [%hexa =hxgrms]
   ==
 --

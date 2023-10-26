@@ -14,7 +14,7 @@
 :: add update front for real time pals
 
 /-  *yijing, *pals
-/+  gossip, default-agent, dbug, agentio
+/+  *yijing, gossip, default-agent, dbug, agentio
 
 /$  grab-send  %noun  %yijing-send
 
@@ -82,9 +82,13 @@
     ^-  (quip card _state)
     ?-    -.act
       %cast
-      =/  hexagram  `@ud`(~(rad og eny.bowl) 64)
-      ~&  >  hexagram
-      =/  change  `cast`[now.bowl eny.bowl intention.act hexagram hexagram]
+      =/  coins=(list @ud)  (cast6 eny.bowl) 
+      :: =/  hexagram  `@ud`(~(rad og eny.bowl) 64)
+      =/  pos  (hex-to-num (beinghex coins))
+      =/  mom  (hex-to-num (becominghex coins))
+      =/  chg  (changing-lines coins)
+      ~&  >  [pos mom chg]
+      =/  change  `cast`[now.bowl eny.bowl intention.act pos chg mom]
       :_  state(log (~(add ja log) our.bowl change))
       :~  [(fact:io yijing-update+!>([%sngl our.bowl change]) ~[/updates])]
           [(invent:gossip %yijing-send !>([%sngl change]))]
@@ -122,6 +126,9 @@
         =/  hashp=(unit casts)   (~(get by log) shp)
         ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
        ``yijing-scry+!>([%shiplog shp u.hashp])
+    [%x %hexa ~]  
+      =/  =hxgrms  (hexagrams)
+    ``yijing-scry+!>([%hexa hxgrms])
   ==
 
 
