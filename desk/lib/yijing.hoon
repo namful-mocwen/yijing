@@ -60,7 +60,7 @@
     =/  x  (snag (dec n) cast)
     |-
     ::  is n=0? if yes return cast6
-             
+        
     ?:  =(n 0)  cast
     ::  if no, make the following changes
     =/  x  (snag (dec n) cast)

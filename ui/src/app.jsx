@@ -17,12 +17,11 @@ export function App() {
     const init = async () =>  {
       const newUrbit = new Urbit('', '')
       newUrbit.ship = window.ship
-
-      setHexagrams(await newUrbit.scry({
+      const hx = await newUrbit.scry({
         app: 'yijing',
         path: `/hexa`,
-        }))
-
+        })
+      setHexagrams(hx?.sort((a, b) => a.num - b.num))
       await newUrbit.subscribe({
         app: "yijing",
         path: "/updates",
