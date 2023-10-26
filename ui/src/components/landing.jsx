@@ -203,32 +203,32 @@ export const Landing = () => {
         scene.add(bg);
 
         // Add pointers
-        const mouse = new THREE.Vector2();
-        const raycaster = new THREE.Raycaster();
-        const cursorTarget = new THREE.Vector3();
+        // const mouse = new THREE.Vector2();
+        // const raycaster = new THREE.Raycaster();
+        // const cursorTarget = new THREE.Vector3();
 
-        // Add shadow
-        const orb = new THREE.SphereGeometry(0.087, 32, 32);
-        const orbMaterial = new THREE.MeshBasicMaterial({ color: 0xefefef });
-        const shadow = new THREE.Mesh(orb, orbMaterial);
-        scene.add(shadow);
+        // // Add shadow
+        // const orb = new THREE.SphereGeometry(0.087, 32, 32);
+        // const orbMaterial = new THREE.MeshBasicMaterial({ color: 0xefefef });
+        // const shadow = new THREE.Mesh(orb, orbMaterial);
+        // scene.add(shadow);
 
-        function onMouseMove(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        // function onMouseMove(event) {
+        //     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        //     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(scene.children);
+        //     raycaster.setFromCamera(mouse, camera);
+        //     const intersects = raycaster.intersectObjects(scene.children);
 
-            if (intersects.length > 0) {
-                const intersection = intersects[0];
-                cursorTarget.copy(intersection.point); // Store the target position
-                const dampingFactor = 0.1; // Adjust the damping factor as needed
-                shadow.position.lerp(cursorTarget, dampingFactor);
-            }
-        }
+        //     if (intersects.length > 0) {
+        //         const intersection = intersects[0];
+        //         cursorTarget.copy(intersection.point); // Store the target position
+        //         const dampingFactor = 0.1; // Adjust the damping factor as needed
+        //         shadow.position.lerp(cursorTarget, dampingFactor);
+        //     }
+        // }
 
-        window.addEventListener('mousemove', onMouseMove, false);
+        // window.addEventListener('mousemove', onMouseMove, false);
 
         camera.position.z = 5;
 
