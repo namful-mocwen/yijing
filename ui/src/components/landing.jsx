@@ -11,9 +11,13 @@ export const Landing = () => {
           setOracle(subEvent)
           }
       updateFun()
-      }, [subEvent]);
+    }, [subEvent]);
 
-console.log('hexa', hexagrams)
+    useEffect(() => {
+      setOracle({})
+      }, []);
+  
+    
     const cast = (intention) => {
         urbit.poke({
           app: "yijing",
@@ -32,10 +36,12 @@ console.log('hexa', hexagrams)
         setIntention('')
       }
     };
-console.log('o',oracle)
+
+    console.log('o',oracle)
+    console.log('hexa', hexagrams)
     return(
         <main>
-            <Link className='nav' to="/apps/yijing/log">[log]</Link>
+            <br/>
             {!oracle?.position 
             ? 
             <input
@@ -47,22 +53,26 @@ console.log('o',oracle)
             />
             :
             <div className='oracle'>
-                <div>intention: {oracle.intention}</div><p/>
-                <div>position: {oracle.position-1}</div><p/>
+                <button className='hover' onClick={() => setOracle({})}>[ X ] </button><br/><br/>
+                <div>Intention: {oracle.intention}</div><p/>
+                <div>Position: {oracle.position-1}</div><p/>
                 <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/>
                 <div>{hexagrams[oracle.position-1].c} -  {hexagrams[oracle.position-1].nom}</div><p/>
-                <div>judgement: {hexagrams[oracle.position-1].jud}</div><p/>
-                <div>image: {hexagrams[oracle.position-1].img}</div><p/>
-                {oracle.changing.length > 0 && <div><div>changing lines: 
-                  {oracle.changing?.map(o => {return <p>line {o}: {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
+                <div>Judgement: {hexagrams[oracle.position-1].jud}</div><p/>
+                <div>Image: {hexagrams[oracle.position-1].img}</div><p/>
+                {oracle.changing.length > 0 && <div><div>Changing Lines: 
+                  {oracle.changing?.map(o => {return <p>Line {o}: {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
                   <p/>
-                  <div>momentum: {oracle.momentum-1}</div><p/>
+                  <div>Momentum: {oracle.momentum-1}</div><p/>
                   <div style={{fontSize:'64px'}}>{hexagrams[oracle.momentum-1].hc}</div><p/>
                   <div>{hexagrams[oracle.momentum-1].c} - {hexagrams[oracle.momentum-1].nom}</div><p/>
-                  <div>judgement: {hexagrams[oracle.momentum-1].jud}</div><p/>
+                  <div>Judgement: {hexagrams[oracle.momentum-1].jud}</div><p/>
                   </div>}
-                <button onClick={() => setOracle({})}>X</button>
             </div>}
+            <div style={{marginTop:'128px', marginRight: '16px'}}>
+            {!oracle?.position && <urbit-sigil {...{ point: urbit?.ship, size: 256, space: 'none'}} />}
+            </div>
+            <Link  className='nav' to="/apps/yijing/log">[log]</Link>
          </main>
     )
 }

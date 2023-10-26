@@ -13,7 +13,7 @@ main {
     width: 100vw;
     height: 95vh;
     align-items: center;
-      overflow: scroll;
+    overflow: scroll;
 }
 
 header {
@@ -60,7 +60,15 @@ input {
 table, tr, td, th  {
   border: 1px solid white;
   text-align: center;
-  padding: 8px;
+  padding: auto;
+}
+
+.hover {
+  cursor: pointer;
+  &:hover {
+    color: black;
+    background-color: white;
+  }
 }
 table{
   padding: 0;

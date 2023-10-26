@@ -42,8 +42,8 @@ export function App() {
   return (
       <div>
         <header>
-          <span>䷁</span>
-          <span>䷀</span>
+          <span className='hover'>䷁</span>
+          <span className='hover'>䷀</span>
         </header>
         <main>
         <div style={{height:'0px'}}>:::       yijing       :::</div><p />
