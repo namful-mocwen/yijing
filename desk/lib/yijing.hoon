@@ -27,11 +27,10 @@
     =/  hexagram  `(list @ud)`~
     |-
      ~&  >>  [%hex hexagram]
-    ?:  =(counter 0)  hexagram
+    ?:  =(counter 0)  (flop hexagram)
         %=  $
          counter  (dec counter)
-         hexagram  (flop (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram))
-        
+         hexagram  (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram)   
     ==
        
 ++  beinghex
