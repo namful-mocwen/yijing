@@ -9,11 +9,12 @@
 :: cast pals comments
 :: charge pals casts like likes but not can be done daily
 :: hark
-:: cast from pals urbit eny
+:: cast from pals urbit eny (poke for eny?)
+:: remote scry?
 :: generators
 :: nested core?
 :: shas for entropy?
-:: chat
+:: chat/groups
 :: add update front for real time pals
 
 :: suggestions welcome
@@ -51,7 +52,13 @@
 ++  on-init
   ^-  (quip card _this)
   ~&  >  "%yijing installed. . ."
-  `this
+  :_  this
+  :~  
+      [%pass /pals/leeche %agent [our.bowl %pals] %watch /leeches]
+      [%pass /pals/target %agent [our.bowl %pals] %watch /targets]
+  ==
+  :: `this
+
 :: ::
 ++  on-save
   ^-  vase
@@ -64,8 +71,6 @@
   :_   this(state !<(versioned-state ole))
   :~  
       :: check if subrscribed?
-      :: originally on-init but in case pals added later
-      ::will it fail if no pals app? 
       [%pass /pals/leeche %agent [our.bowl %pals] %watch /leeches]
       [%pass /pals/target %agent [our.bowl %pals] %watch /targets]
   ==

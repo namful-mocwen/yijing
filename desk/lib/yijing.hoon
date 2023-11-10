@@ -71,7 +71,6 @@
     ::  %.n --> 1
     (snap cast (dec n) 1)
     n  (dec n)
-
     ==
 
 ++  changing-lines
@@ -896,7 +895,7 @@
                 l5="If in truth you have a kind heart, ask not. Supreme good fortune. Truly, kindness will be recognized as your virtue."
                 l6="He brings increase to no one. Indeed, someone even strikes him. He doesn't keep his heart constantly steady. Misfortune."
             ==
-        :-  ~[1 0 0 0 0 0]
+        :-  ~[1 1 1 1 1 0]
             :*
                 num=43
                 hc="䷪"
