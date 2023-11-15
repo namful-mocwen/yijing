@@ -95,7 +95,7 @@ export const Log = () => {
                                         {s.intention}
                                     </td> 
                                     <td style={{fontSize: '32px'}}>
-                                        {hexagrams[s.momentum]?.hc || s.momentum}
+                                        {hexagrams[s.momentum-1]?.hc || s.momentum}
                                     </td> 
                                 </tr>
                         )})}

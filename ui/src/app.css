@@ -11,9 +11,15 @@ main {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 95vh;
+    height: 94vh;
     align-items: center;
     overflow: scroll;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+}
+
+main::-webkit-scrollbar {
+  display: none;
 }
 
 header {
@@ -81,6 +87,7 @@ table{
   bottom: 12px;
   text-decoration: none;
   cursor: pointer;
+  z-index: 8888;
   &:hover {
    background-color: white;
    color: black;

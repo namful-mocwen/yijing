@@ -6,6 +6,11 @@ body {
     background-color: black;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    ::-webkit-scrollbar {
+      display: none;
+  }
   }
   
   code {

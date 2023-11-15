@@ -44,13 +44,16 @@ export const Landing = () => {
             <br/>
             {!oracle?.position 
             ? 
-            <input
-                type='text' 
-                name='intention' 
-                placeholder='*?*' 
-                onChange={e => setIntention(e.target.value)}
-                onKeyDown={e => onKeyDown(e)}
-            />
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+              <input
+                  type='text' 
+                  name='intention' 
+                  placeholder='*?*' 
+                  onChange={e => setIntention(e.target.value)}
+                  onKeyDown={e => onKeyDown(e)}
+              />
+              <p style={{color: '#f8f8f8', textAlign: 'center'}}><span style={{color: 'gray'}}>• </span> shared with %pals <span style={{color: 'gray'}}> •</span></p>
+            </div>
             :
             <div className='oracle'>
                 <button className='hover' onClick={() => setOracle({})}>[ X ] </button><br/><br/>
@@ -70,12 +73,12 @@ export const Landing = () => {
                   </div>}
                   <p>~</p>
             </div>}
-            <div style={{marginTop:'128px', marginRight: '16px'}}>
+            <div style={{marginTop:'138px', marginRight: '8px'}}>
             {!oracle?.position && <urbit-sigil {...{ point: (urbit?.ship.length > 16) 
                 ? urbit?.ship.slice(urbit?.ship.length-13, urbit?.ship.length) 
                 : urbit?.ship , size: 208, space: 'none'}} />}
             </div>
-            <Link  className='nav' to="/apps/yijing/log">[log]</Link>
+            <Link className='nav' to="/apps/yijing/log">[log]</Link>
          </main>
     )
 }
