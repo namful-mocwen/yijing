@@ -31,6 +31,8 @@
 
 +$  state-0  [%0 =log]
 +$  card  card:agent:gall
+
++$  cast  [now=@da eny=@ud intention=tape pos=@ud chg=(list @ud) mom=@ud public=@]
 --
 
 =|  state-0
@@ -98,7 +100,7 @@
       =/  mom  (hex-to-num (becominghex coins))
       =/  chg  (changing-lines coins)
       ~&  >  [pos mom chg]
-      =/  change  `cast`[now.bowl eny.bowl intention.act pos chg mom]
+      =/  change  `cast`[now.bowl eny.bowl intention.act pos chg mom public.act]
       :_  state(log (~(add ja log) our.bowl change))
       :~  [(fact:io yijing-update+!>([%sngl our.bowl change]) ~[/updates])]
           [(invent:gossip %yijing-send !>([%sngl change]))]
@@ -132,10 +134,11 @@
   ?+    pol  (on-peek:def pol)
     [%x %log ~]   ``yijing-scry+!>([%log log])
     [%x %log ship=@ ~]
-        =/  shp=who  (slav %p ship:pol)
-        =/  hashp=(unit casts)   (~(get by log) shp)
-        ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
-       ``yijing-scry+!>([%shiplog shp u.hashp])
+      =/  shp=who  (slav %p ship:pol)
+      =/  hashp=(unit casts)   (~(get by log) shp)
+      ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
+      =/  filtered-casts  (turn ~(tap by u.hashp) |=(a=cast ?:(=(public.a %.y) a ~)))
+    ``yijing-scry+!>([%shiplog shp filtered-casts])
     [%x %hexa ~]  
       =/  =hxgrms  (hexagrams)
     ``yijing-scry+!>([%hexa hxgrms])
