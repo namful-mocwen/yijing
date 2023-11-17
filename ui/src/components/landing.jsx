@@ -5,6 +5,7 @@ import '@urbit/sigil-js'
 
 export const Landing = () => {
     const { urbit, oracle, hexagrams, setIntention, setOracle, subEvent, setError } = useUrbitStore()
+    const [privacy, setPrivacy] = useState('public'); // Default to public
 
     useEffect(() => {
       const updateFun = () => {
@@ -22,7 +23,10 @@ export const Landing = () => {
         urbit.poke({
           app: "yijing",
           mark: "yijing-action",
-          json: { cast: { intention: intention } },
+          json: { cast: { 
+            intention: intention, 
+            privacy: privacy === 'public'
+        }},
           onSuccess: () => console.log('successful cast. . .'),
           onError: () => setError("cast lost in dimensions. . ."),
         })
@@ -52,6 +56,20 @@ export const Landing = () => {
                   onChange={e => setIntention(e.target.value)}
                   onKeyDown={e => onKeyDown(e)}
               />
+              <input
+                type='radio'
+                name='privacy'
+                value='public'
+                checked={privacy === 'public'}
+                onChange={() => setPrivacy('public')}
+              /> Public
+              <input
+                type='radio'
+                name='privacy'
+                value='private'
+                checked={privacy === 'private'}
+                onChange={() => setPrivacy('private')}
+              /> Private
               <p style={{color: '#f8f8f8', textAlign: 'center'}}><span style={{color: 'gray'}}>• </span> shared with %pals <span style={{color: 'gray'}}> •</span></p>
             </div>
             :
