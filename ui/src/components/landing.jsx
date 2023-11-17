@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 
 export const Landing = () => {
     const { urbit, oracle, hexagrams, setIntention, setOracle, subEvent, setError } = useUrbitStore()
+    const [privacy, setPrivacy] = useState('public');
 
     useEffect(() => {
       const updateFun = () => {
@@ -22,7 +23,12 @@ export const Landing = () => {
         urbit.poke({
           app: "yijing",
           mark: "yijing-action",
-          json: { cast: { intention: intention } },
+          json: { 
+              cast: {
+                  intention: intention,
+                  public: privacy === 'public'
+              }
+            },
           onSuccess: () => console.log('successful cast. . .'),
           onError: () => setError("cast lost in dimensions. . ."),
         })
@@ -52,6 +58,22 @@ export const Landing = () => {
                   onChange={e => setIntention(e.target.value)}
                   onKeyDown={e => onKeyDown(e)}
               />
+              <div>
+                  <input
+                      type="radio"
+                      name="privacy"
+                      value="public"
+                      checked={privacy === 'public'}
+                      onChange={() => setPrivacy('public')}
+                  /> Public
+                  <input
+                      type="radio"
+                      name="privacy"
+                      value="private"
+                      checked={privacy === 'private'}
+                      onChange={() => setPrivacy('private')}
+                  /> Private
+            </div>
               <p style={{color: '#f8f8f8', textAlign: 'center'}}><span style={{color: 'gray'}}>• </span> shared with %pals <span style={{color: 'gray'}}> •</span></p>
             </div>
             :
