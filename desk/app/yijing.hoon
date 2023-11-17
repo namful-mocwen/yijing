@@ -132,10 +132,11 @@
   ?+    pol  (on-peek:def pol)
     [%x %log ~]   ``yijing-scry+!>([%log log])
     [%x %log ship=@ ~]
-        =/  shp=who  (slav %p ship:pol)
-        =/  hashp=(unit casts)   (~(get by log) shp)
-        ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
-       ``yijing-scry+!>([%shiplog shp u.hashp])
+      =/  shp=who  (slav %p ship:pol)
+      =/  hashp=(list cast)   (~(get by log) shp)
+      ?~  hashp  ~&  >>>  "yijing: ship {<shp>} not found"  ~
+      =/  public-casts=(list cast)  (turn hashp |=(a=cast (and:rs =(public.a %.y) a)))
+      ``yijing-scry+!>([%shiplog shp public-casts])
     [%x %hexa ~]  
       =/  =hxgrms  (hexagrams)
     ``yijing-scry+!>([%hexa hxgrms])
