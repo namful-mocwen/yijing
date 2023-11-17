@@ -70,6 +70,7 @@ export const Log = () => {
                             <th>position</th>
                             <th>intention</th>
                             <th>momentum</th>
+                            <th>privacy</th>
                         </tr>
                         {log[feed]?.map((s,i) => {
                             var when = new Date(s.when);
