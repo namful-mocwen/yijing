@@ -1,7 +1,11 @@
 ::/sur/yijing.hoon
+::
+:: some names need adjusting
+:: some types can be changed
+::
 
 |%
-+$  id    @
+
 +$  who   @p
 +$  when  @da
 
@@ -10,24 +14,9 @@
 +$  changing   (list @ud)
 +$  momentum   @ud
 +$  entropy    @uvj
+:: +$  charge  map @p @ud
 
-::  research message structure samples
-
-
-::+$  log  (list cast)
-
-:: search with this 
-:: +$  casts  (map id cast)
-::  can we get cast by searching ship 
-:: ??  +$ shipcasts (map who [cast ~])
-:: +$ private map who casts
-:: look up by ship 
-
-:: encryption
-:: sharing where stored?
-:: maybe all shared to start
-
-+$  cast  [=when =entropy =intention =position =changing =momentum]
++$  cast  [=when =entropy =intention =position =changing =momentum] 
 +$  casts  (list cast)
 +$  log  (jar who cast)
 
@@ -44,6 +33,10 @@
 
 +$  hexkey  [(list @ud) hexagram]
 +$  hexkeylist  (list hexkey)  
+
++$  rumor   [when=@da what=@t]
++$  rumors  (list rumor)
+
 +$  action
   $%  [%cast =intention]
       :: [%del =who]
@@ -66,5 +59,6 @@
     [%log =log]
     [%shiplog =who =casts]
     [%hexa =hxgrms]
+    [%rumors =rumors]
   ==
 --

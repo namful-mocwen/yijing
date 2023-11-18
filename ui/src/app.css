@@ -67,6 +67,7 @@ table, tr, td, th  {
   border: 1px solid white;
   text-align: center;
   padding: auto;
+  overflow-wrap: break-word;
 }
 
 .hover {
@@ -81,10 +82,13 @@ table{
   padding: 0;
 }
 
-.nav {
-  color: white;
+.bottom {
   position: fixed;
   bottom: 12px;
+
+}
+.nav {
+  color: white;
   text-decoration: none;
   cursor: pointer;
   z-index: 8888;
@@ -102,3 +106,4 @@ table{
 .bold {
   font-weight: bold;
 }
+

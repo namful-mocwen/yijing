@@ -30,7 +30,8 @@
     ?:  =(counter 0)  (flop hexagram)
         %=  $
          counter  (dec counter)
-         hexagram  (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram)   
+         hexagram  (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram)
+        
     ==
        
 ++  beinghex
@@ -133,7 +134,6 @@
     ::  combine logs?
     ?-  -.scr
         %shiplog
-        :: lis
         %-  frond
         :-  `@t`(scot %p who.scr)
         :-  %a
@@ -185,6 +185,14 @@
             ['l5' (tape l5.hxa)]
             ['l6' (tape l6.hxa)]
         == 
+        %rumors
+        :-  %a
+        %+  turn  rumors.scr
+        |=  rmr=rumor
+        %-  pairs
+        :~  ['when' (time when.rmr)]
+            ['what' s+what.rmr]
+        ==
     ==
 
 ++  hex-to-num

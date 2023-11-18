@@ -29,15 +29,12 @@ in browser localhost/docket/upload
 choose yijing app from dropdown    
 upload /ui/dist folder    
 glob      
-  
-see ui branch for experimental interface  
 
 ## notes
 
 work in progress  
 only the beginning  
 everything connected. . .  
-
 
 
 

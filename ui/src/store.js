@@ -18,8 +18,16 @@ const useUrbitStore = create((set) => ({
     setIntention: intention => set({ intention }),
     setOracle: oracle => set({ oracle }),
     setLoading: loading => set({ loading }),
-    setError: error => set({ error })
-
+    setError: error => set({ error }),
+    cast: (intention, urbit) => {
+      urbit.poke({
+        app: "yijing",
+        mark: "yijing-action",
+        json: { cast: { intention: intention } },
+        onSuccess: () => console.log('successful cast. . .'),
+        onError: () => setError("cast lost in dimensions. . ."),
+      })
+    }
   }))
 
   export default useUrbitStore

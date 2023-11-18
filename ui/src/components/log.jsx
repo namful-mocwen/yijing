@@ -9,7 +9,7 @@ import '@urbit/sigil-js'
 export const Log = () => {
     const { urbit, log, hexagrams, oracle, setOracle, setLog } = useUrbitStore()
     const [feed, setFeed] = useState('~zod')
-
+    
     // const getShipLog = async () => {
     //     return urbit.scry({
     //     app: 'yijing',
@@ -102,7 +102,7 @@ export const Log = () => {
                     </tbody>
                 </table>
                 : <div className='oracle'>
-                    <button className='hover' onClick={() => setOracle({})}>[ X ] </button><br/><br/>
+                    <button className='hover' onClick={() => setOracle({})}>[ X ]</button><br/><br/>
                     <div><p className='bold'>Intention</p> {oracle.intention}</div><p/><p>~</p>
                     <div><p className='bold'>Position</p> {oracle.position}</div><p/>
                     <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/><p/>
@@ -121,7 +121,10 @@ export const Log = () => {
                 </div>}
                 <br/><br/>
             </main>
-            <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/">[cast]</Link>
+            <div className='bottom'>
+              <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/">[cast]</Link>&nbsp;&nbsp;
+              <Link className='nav' to="/apps/yijing/rumors">[rumors]</Link>
+            </div>
         </>
     )
 }

@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Landing } from './components/landing'
+import { Rumors } from './components/rumors'
 import { Log } from './components/log'
 import useUrbitStore from './store'
 
 import Urbit from '@urbit/http-api'
 import './app.css'
-// sigils
-// context
-
 
 export function App() {
-  const { urbit, setUrbit, setHexagrams, setSubEvent } = useUrbitStore()
+  const { urbit, setUrbit, setHexagrams, subEvent, setOracle, setSubEvent } = useUrbitStore()
 
   useEffect(() => {
     const init = async () =>  {
@@ -36,6 +34,13 @@ export function App() {
   }, []);
 
 
+  useEffect(() => {
+    const updateFun = () => {
+        setOracle(subEvent)
+        }
+    updateFun()
+  }, [subEvent]);
+
  console.log('ship', urbit?.ship)
 
   return (
@@ -50,6 +55,7 @@ export function App() {
               <Routes>
                     <Route exact path='/apps/yijing' element={ <Landing /> } />
                     <Route exact path='/apps/yijing/log' element={ <Log subEvent/> } />
+                    <Route exact path='/apps/yijing/rumors' element={ <Rumors subEvent/> } />
               </Routes> 
             </BrowserRouter>
         </main>

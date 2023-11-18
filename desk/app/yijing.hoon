@@ -138,7 +138,10 @@
        ``yijing-scry+!>([%shiplog shp u.hashp])
     [%x %hexa ~]  
       =/  =hxgrms  (hexagrams)
-    ``yijing-scry+!>([%hexa hxgrms])
+      ``yijing-scry+!>([%hexa hxgrms])
+    [%x %rumors ~]   
+      =/  =rumors  (scag 64 .^(rumors %gx /(scot %p our.bowl)/rumors/(scot %da now.bowl)/rumors/noun))
+      ``yijing-scry+!>([%rumors rumors])
   ==
 
 
