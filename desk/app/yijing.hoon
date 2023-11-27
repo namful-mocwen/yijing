@@ -92,16 +92,10 @@
     ^-  (quip card _state)
     ?-    -.act
       %cast
-      =/  coins=(list @ud)  (cast6 eny.bowl) 
-      :: =/  hexagram  `@ud`(~(rad og eny.bowl) 64)
-      =/  pos  (hex-to-num (beinghex coins))
-      =/  mom  (hex-to-num (becominghex coins))
-      =/  chg  (changing-lines coins)
-      ~&  >  [pos mom chg]
-      =/  change  `cast`[now.bowl eny.bowl intention.act pos chg mom]
-      :_  state(log (~(add ja log) our.bowl change))
-      :~  [(fact:io yijing-update+!>([%sngl our.bowl change]) ~[/updates])]
-          [(invent:gossip %yijing-send !>([%sngl change]))]
+      =/  cst=cast  (full-cast [bowl intention.act]) 
+      :_  state(log (~(add ja log) our.bowl cst))
+      :~  [(fact:io yijing-update+!>([%sngl our.bowl cst]) ~[/updates])]
+          [(invent:gossip %yijing-send !>([%sngl cst]))]
       ==
       :: %del  :: temp solution
       :: [~ state(log (~(del by log) who.act))]
@@ -142,6 +136,9 @@
     [%x %rumors ~]   
       =/  =rumors  (scag 64 .^(rumors %gx /(scot %p our.bowl)/rumors/(scot %da now.bowl)/rumors/noun))
       ``yijing-scry+!>([%rumors rumors])
+    [%x %entropy ~]   ``yijing-scry+!>([%entropy eny.bowl])  
+    [%x %cast ~]   
+    ``yijing-scry+!>([%cast (full-cast [bowl ''])])  
   ==
 
 

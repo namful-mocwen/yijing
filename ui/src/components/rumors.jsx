@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
+import { useWindowWidth } from '@react-hook/window-size'
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 
@@ -7,6 +8,7 @@ export const Rumors = () => {
     const { urbit, cast, oracle, hexagrams, setOracle, setIntention } = useUrbitStore()
     const [rumors, setRumors] = useState([])
     const navigate = useNavigate();
+    const width = useWindowWidth()
 
    const getRumors = async () => {
         return urbit.scry({
@@ -62,15 +64,15 @@ export const Rumors = () => {
                             var when = new Date(s.when);
                             return (
                                 <tr onClick={()=> setIntention(s.what)} tkey={i}>  
-                                    <td>
+                                    {width > 420 && <td>
                                             {`${when.toLocaleTimeString("en-US")}`}   <br></br>
                                             {`${when.toLocaleDateString("en-US")}`}   
-                                    </td> 
-                                    <td style={{minWidth: '32vw', maxWidth: '64vw'}}>
+                                    </td>}
+                                    <td style={{minWidth: '8vw', maxWidth: width > 420 ? '64vw' : '81vw'}}>
                                         {s.what}
                                     </td> 
                                     <td>
-                                        <button  onClick={()=> cast(s.what, urbit)} className='reverse'>
+                                        <button  onClick={()=> cast(`%rumors ~ ${s.what}`, urbit)} className='reverse'>
                                             cast 
                                         </button>
                                     </td> 
@@ -101,6 +103,7 @@ export const Rumors = () => {
             <div className='bottom'>
               <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/">[cast]</Link>&nbsp;&nbsp;
               <Link className='nav' to="/apps/yijing/log">[log]</Link>
+              {/* <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/random">[random]</Link> */}
             </div>
         </>
     )

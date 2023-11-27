@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Landing } from './components/landing'
 import { Rumors } from './components/rumors'
+// import { Random } from './components/random'
 import { Log } from './components/log'
 import useUrbitStore from './store'
 
@@ -9,7 +10,7 @@ import Urbit from '@urbit/http-api'
 import './app.css'
 
 export function App() {
-  const { urbit, setUrbit, setHexagrams, subEvent, setOracle, setSubEvent } = useUrbitStore()
+  const { urbit, setUrbit, hexagrams, setHexagrams, hOracle, setHOracle, subEvent, setOracle, setSubEvent } = useUrbitStore()
 
   useEffect(() => {
     const init = async () =>  {
@@ -41,21 +42,31 @@ export function App() {
     updateFun()
   }, [subEvent]);
 
- console.log('ship', urbit?.ship)
+  const getHOracle = async () => {
+    const result = await urbit.scry({
+    app: 'yijing',
+    path: '/cast',
+    })
+    // console.log(result)
+    setHOracle(result)
+    setOracle(result)
+  };  
 
+ urbit?.ship && console.log('ship', urbit.ship)
   return (
       <div>
-        <header>
-          <span className='hover'>䷁</span>
-          <span className='hover'>䷀</span>
+        <header>  
+          <span onClick={() => getHOracle()} className='hover'>{hexagrams ? hexagrams[hOracle?.position - 1].hc : '䷁'}</span>
+          <span onClick={() => setOracle(hOracle)} className='hover'>{hexagrams ? hexagrams[hOracle?.momentum - 1].hc : '䷀'}</span>
         </header>
+        <div className='yijing'>:::       yijing       :::</div>
         <main>
-        <div style={{height:'0px'}}>:::       yijing       :::</div><p />
             <BrowserRouter>
               <Routes>
                     <Route exact path='/apps/yijing' element={ <Landing /> } />
                     <Route exact path='/apps/yijing/log' element={ <Log subEvent/> } />
                     <Route exact path='/apps/yijing/rumors' element={ <Rumors subEvent/> } />
+                    {/* <Route exact path='/apps/yijing/random' element={ <Random subEvent/> } /> */}
               </Routes> 
             </BrowserRouter>
         </main>

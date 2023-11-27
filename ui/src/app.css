@@ -2,7 +2,7 @@ html {
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     display: flex;
     align-content: center;
   }
@@ -10,8 +10,11 @@ html {
 main {
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 32px;
+    bottom: 32px;
     width: 100vw;
-    height: 94vh;
+    height: (100vh-32px);
     align-items: center;
     overflow: scroll;
     -ms-overflow-style: none;  
@@ -85,13 +88,16 @@ table{
 .bottom {
   position: fixed;
   bottom: 12px;
-
+  justify-content: center;
+  z-index:8888;
 }
+
+
 .nav {
   color: white;
   text-decoration: none;
+
   cursor: pointer;
-  z-index: 8888;
   &:hover {
    background-color: white;
    color: black;
@@ -107,3 +113,10 @@ table{
   font-weight: bold;
 }
 
+.yijing {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height:0px;
+}

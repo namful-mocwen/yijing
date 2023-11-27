@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useWindowWidth } from '@react-hook/window-size'
 import { Link } from "react-router-dom"
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
@@ -9,7 +10,8 @@ import '@urbit/sigil-js'
 export const Log = () => {
     const { urbit, log, hexagrams, oracle, setOracle, setLog } = useUrbitStore()
     const [feed, setFeed] = useState('~zod')
-    
+    const width = useWindowWidth()
+
     // const getShipLog = async () => {
     //     return urbit.scry({
     //     app: 'yijing',
@@ -34,8 +36,7 @@ export const Log = () => {
         setOracle({})
       }, [urbit]);
     
-    console.log('ship', urbit?.ship)
-    log && console.log('log', log)
+    // log.length > 0 && console.log('log', log)
       // urbit sigil moons missing
     return (
         <>
@@ -65,8 +66,8 @@ export const Log = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>who</th>
-                            <th>when</th>
+                            {width > 345 && <th>who</th>}
+                            {width > 500 && <th>when</th>}
                             <th>position</th>
                             <th>intention</th>
                             <th>momentum</th>
@@ -75,23 +76,23 @@ export const Log = () => {
                             var when = new Date(s.when);
                             return (
                                 <tr className='hover' onClick={()=> setOracle(s)} tkey={i}>  
-                                    <td>
-                                    {<urbit-sigil {...{ point: (feed.length) > 16 
+                                    {width > 345 && <td>
+                                        <urbit-sigil {...{ point: (feed.length) > 16 
                                                         ? feed.slice(feed.length-13, feed.length) : feed, 
                                                        size: 28,
                                                        space:'none',
                                                     }}
-                                     />}  
-                                    </td>
-                                    <td>
+                                     /> 
+                                    </td>}
+                                    {width > 500 && <td>
                                             {`${when.toLocaleTimeString("en-US")}`}   <br></br>
                                             {`${when.toLocaleDateString("en-US")}`}   
-                                    </td> 
+                                    </td> }
                                     <td style={{fontSize: '32px'}}>
                                         {hexagrams[s.position-1]?.hc || s.position}
                                     </td>    
                                 
-                                    <td>
+                                    <td style={{minWidth: '8vw', maxWidth:  '42vw'}}>
                                         {s.intention}
                                     </td> 
                                     <td style={{fontSize: '32px'}}>
@@ -105,7 +106,7 @@ export const Log = () => {
                     <button className='hover' onClick={() => setOracle({})}>[ X ]</button><br/><br/>
                     <div><p className='bold'>Intention</p> {oracle.intention}</div><p/><p>~</p>
                     <div><p className='bold'>Position</p> {oracle.position}</div><p/>
-                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/><p/>
+                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div>
                     <div>{hexagrams[oracle.position-1].c} -  {hexagrams[oracle.position-1].nom}</div><p/>
                     <div><p className='bold'>Judgement</p> {hexagrams[oracle.position-1].jud}</div><p/>
                     <div><p className='bold'>Image</p> {hexagrams[oracle.position-1].img}</div><p/>
@@ -113,7 +114,7 @@ export const Log = () => {
                     {oracle.changing?.map(o => {return <p><span className='bold'>Line {o}:</span> {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
                     <p/><p>~</p>
                     <div><p className='bold'>Momentum</p> {oracle.momentum}</div><p/>
-                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.momentum-1].hc}</div><p/>
+                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.momentum-1].hc}</div>
                     <div>{hexagrams[oracle.momentum-1].c} - {hexagrams[oracle.momentum-1].nom}</div><p/>
                     <div><p className='bold'>Judgement</p> {hexagrams[oracle.momentum-1].jud}</div><p/>
                     </div>}
@@ -124,6 +125,7 @@ export const Log = () => {
             <div className='bottom'>
               <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/">[cast]</Link>&nbsp;&nbsp;
               <Link className='nav' to="/apps/yijing/rumors">[rumors]</Link>
+              {/* <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/random">[random]</Link> */}
             </div>
         </>
     )

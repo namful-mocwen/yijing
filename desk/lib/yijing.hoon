@@ -30,8 +30,7 @@
     ?:  =(counter 0)  (flop hexagram)
         %=  $
          counter  (dec counter)
-         hexagram  (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram)
-        
+         hexagram  (weld (limo [(linesum (add2 (linelist eny counter))) ~]) hexagram)  
     ==
        
 ++  beinghex
@@ -98,6 +97,18 @@
         [~[0 0 0] [%earth %kun]]
     ==
     (~(got by (malt trilist)) key)
+
+++  full-cast
+      |=  [=bowl:gall int=intention]
+      ^-  cast
+      =/  coins=(list @ud)  (cast6 (add eny.bowl (add now.bowl (add int our.bowl)))) 
+      :: =/  hexagram  `@ud`(~(rad og eny.bowl) 64)
+      =/  pos  (hex-to-num (beinghex coins))
+      =/  mom  (hex-to-num (becominghex coins))
+      =/  chg  (changing-lines coins)
+      ~&  >  [pos mom chg]
+      =/  change  `cast`[now.bowl eny.bowl int pos chg mom]
+     change
 
 ++  dejs-action
   =,  dejs:format
@@ -193,6 +204,20 @@
         :~  ['when' (time when.rmr)]
             ['what' s+what.rmr]
         ==
+        %entropy
+        %-  frond
+         ~&  >  entropy.scr
+        :-  'entropy'
+        (numb entropy.scr)
+        %cast
+        %-  pairs
+        :~  ['when' (time when.cast.scr)]
+            ['entropy' (numb entropy.cast.scr)]
+            ['intention' s+intention.cast.scr]
+            ['position' (numb position.cast.scr)]
+            ['changing' a+(turn changing.cast.scr |=(chg=@ud (numb chg)))]
+            ['momentum' (numb momentum.cast.scr)]
+        == 
     ==
 
 ++  hex-to-num

@@ -60,5 +60,7 @@
     [%shiplog =who =casts]
     [%hexa =hxgrms]
     [%rumors =rumors]
+    [%entropy =entropy]
+    [%cast =cast]
   ==
 --

@@ -4,7 +4,7 @@ import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 
 export const Landing = () => {
-    const { urbit, cast, oracle, hexagrams, setIntention, setOracle, setError } = useUrbitStore()
+    const { urbit, cast, oracle, hOracle, hexagrams, setIntention, setOracle, setError } = useUrbitStore()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +20,8 @@ export const Landing = () => {
       }
     };
 
-    console.log('o',oracle)
+    // oracle && console.log('o', oracle)
+    // hOracle && console.log('hO', hOracle)
     console.log('hexa', hexagrams)
     return(
         <main>
@@ -39,7 +40,7 @@ export const Landing = () => {
             </div>
             :
             <div className='oracle'>
-                <button className='hover' onClick={() => {setOracle({}); navigate("/apps/yijing/log")}}>[ X ] </button><br/><br/>
+                <button className='hover' onClick={() => {oracle !== hOracle ? navigate("/apps/yijing/log"): setOracle({})}}>[ X ] </button><br/><br/>
                 <div><p className='bold'>Intention</p> {oracle.intention}</div><p/><p>~</p>
                 <div><p className='bold'>Position</p> {oracle.position}</div><p/>
                 <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div><p/>
@@ -62,8 +63,10 @@ export const Landing = () => {
                 : urbit?.ship , size: 208, space: 'none'}} />}
             </div>
             <div className='bottom'>
+            {/* <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/random">[random]</Link>&nbsp;&nbsp; */}
               <Link className='nav' to="/apps/yijing/log">[log]</Link>&nbsp;&nbsp;
               <Link className='nav' to="/apps/yijing/rumors">[rumors]</Link>
+            
             </div>
          </main>
     )

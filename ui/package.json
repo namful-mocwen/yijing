@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@react-hook/window-size": "^3.1.1",
     "@urbit/api": "^2.3.0",
     "@urbit/http-api": "^2.3.0",
     "@urbit/sigil-js": "^2.1.0",
