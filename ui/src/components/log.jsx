@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useWindowWidth } from '@react-hook/window-size'
 import { Link } from "react-router-dom"
+import { Oracle } from './oracle'
 import useUrbitStore from '../store'
 import '@urbit/sigil-js'
 
@@ -33,7 +34,7 @@ export const Log = () => {
               setFeed(`~${urbit.ship}`)
         }
         urbit && getLogs()
-        setOracle({})
+        setOracle(null)
       }, [urbit]);
     
     // log.length > 0 && console.log('log', log)
@@ -42,7 +43,7 @@ export const Log = () => {
         <>
             <main>
                 <br/>
-                {!oracle?.position ? <table>
+                {!oracle ? <table>
                     <thead>
                         <tr>
                             <th colSpan={6}>
@@ -102,28 +103,12 @@ export const Log = () => {
                         )})}
                     </tbody>
                 </table>
-                : <div className='oracle'>
-                    <button className='hover' onClick={() => setOracle({})}>[ X ]</button><br/><br/>
-                    <div><p className='bold'>Intention</p> {oracle.intention}</div><p/><p>~</p>
-                    <div><p className='bold'>Position</p> {oracle.position}</div><p/>
-                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.position-1].hc}</div>
-                    <div>{hexagrams[oracle.position-1].c} -  {hexagrams[oracle.position-1].nom}</div><p/>
-                    <div><p className='bold'>Judgement</p> {hexagrams[oracle.position-1].jud}</div><p/>
-                    <div><p className='bold'>Image</p> {hexagrams[oracle.position-1].img}</div><p/>
-                    {oracle.changing.length > 0 && <div><div><span className='bold'>Changing Lines</span>
-                    {oracle.changing?.map(o => {return <p><span className='bold'>Line {o}:</span> {hexagrams[oracle.position-1][`l${o}`]}</p>})} </div>
-                    <p/><p>~</p>
-                    <div><p className='bold'>Momentum</p> {oracle.momentum}</div><p/>
-                    <div style={{fontSize:'64px'}}>{hexagrams[oracle.momentum-1].hc}</div>
-                    <div>{hexagrams[oracle.momentum-1].c} - {hexagrams[oracle.momentum-1].nom}</div><p/>
-                    <div><p className='bold'>Judgement</p> {hexagrams[oracle.momentum-1].jud}</div><p/>
-                    </div>}
-                    <p>~</p>
-                </div>}
+                : <Oracle /> }
                 <br/><br/>
             </main>
             <div className='bottom'>
-              <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/">[cast]</Link>&nbsp;&nbsp;
+              <Link className='nav' to="/apps/yijing/hexagrams">[hexagrams]</Link>&nbsp;&nbsp;
+              <Link onClick={()=>setOracle(null)} className='nav'  to="/apps/yijing/">[cast]</Link>&nbsp;&nbsp;
               <Link className='nav' to="/apps/yijing/rumors">[rumors]</Link>
               {/* <Link onClick={()=>setOracle({})} className='nav'  to="/apps/yijing/random">[random]</Link> */}
             </div>

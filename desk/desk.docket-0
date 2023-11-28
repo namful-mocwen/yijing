@@ -6,5 +6,5 @@
   website+'https://urbit.org'
   license+'MIT'
   base+'yijing'
-  glob-ames+[~zod 0v4.rk8kv.oog26.fhilm.vorr4.6v0qb]
+  glob-ames+[~zod 0v1.e5e6d.cbgj8.ji0o5.3ehd9.i6o3l]
 ==

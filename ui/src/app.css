@@ -27,7 +27,7 @@ main::-webkit-scrollbar {
 
 header {
     width: 100vw;
-    font-size: 33px;
+    font-size: 32px;
     position: fixed;
     top: 0px;
     display: flex;
@@ -90,6 +90,7 @@ table{
   bottom: 12px;
   justify-content: center;
   z-index:8888;
+  word-wrap: break-word;
 }
 
 
@@ -119,4 +120,12 @@ table{
   justify-content: center;
   width: 100vw;
   height:0px;
+}
+
+.hexagram {
+  font-size: 48px;
+  &:hover {
+    background-color: white;
+    color: black;
+   }
 }

@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Landing } from './components/landing'
 import { Rumors } from './components/rumors'
 // import { Random } from './components/random'
+import { Hexagrams } from './components/hexagrams'
 import { Log } from './components/log'
 import useUrbitStore from './store'
 
@@ -28,12 +29,14 @@ export function App() {
         err: () => console.log("Subscription rejected"),
         quit: () => console.log("Kicked from subscription"),
       })
-
+      setHOracle(await newUrbit.scry({
+        app: 'yijing',
+        path: '/cast',
+        }))
       setUrbit(newUrbit)
     }
     init()
   }, []);
-
 
   useEffect(() => {
     const updateFun = () => {
@@ -48,15 +51,15 @@ export function App() {
     path: '/cast',
     })
     // console.log(result)
+    setOracle(null)
     setHOracle(result)
-    setOracle(result)
   };  
 
  urbit?.ship && console.log('ship', urbit.ship)
   return (
       <div>
         <header>  
-          <span onClick={() => getHOracle()} className='hover'>{hexagrams ? hexagrams[hOracle?.position - 1].hc : '䷁'}</span>
+          <span onClick={async () => await getHOracle()} className='hover'>{hexagrams ? hexagrams[hOracle?.position - 1].hc : '䷁'}</span>
           <span onClick={() => setOracle(hOracle)} className='hover'>{hexagrams ? hexagrams[hOracle?.momentum - 1].hc : '䷀'}</span>
         </header>
         <div className='yijing'>:::       yijing       :::</div>
@@ -67,6 +70,7 @@ export function App() {
                     <Route exact path='/apps/yijing/log' element={ <Log subEvent/> } />
                     <Route exact path='/apps/yijing/rumors' element={ <Rumors subEvent/> } />
                     {/* <Route exact path='/apps/yijing/random' element={ <Random subEvent/> } /> */}
+                    <Route exact path='/apps/yijing/hexagrams' element={ <Hexagrams subEvent/> } />
               </Routes> 
             </BrowserRouter>
         </main>

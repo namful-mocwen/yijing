@@ -8,7 +8,7 @@ const useUrbitStore = create((set) => ({
     shipLog: [],
     subEvent: null,
     intention: null,
-    oracle: {},
+    oracle: null,
     hOracle: { position: 2, momentum: 1, changing: [1,2,3,4,5,6] },
     loading: false,
     error: null,
